@@ -1,89 +1,95 @@
 .container {
-  max-width: 45rem;
-  padding: 3rem 2rem;
-  margin: 0 auto;
+  height: calc(100vh - 6.5rem);
 
-  .thumbnailContainer {
-    position: relative;
+  overflow-y: auto;
 
-    img {
-      border-radius: 1rem;
-    }
+  div {
+    max-width: 45rem;
+    padding: 3rem 2rem;
+    margin: 0 auto;
 
-    button {
-      width: 3rem;
-      height: 3rem;
+    .thumbnailContainer {
+      position: relative;
 
-      border-radius: 0.75rem;
-      border: 0;
-      position: absolute;
-      z-index: 5;
-
-      font-size: 0;
-
-      transition: 0.2s;
-
-      &.hover {
-        filter: brightness(0.95);
+      img {
+        border-radius: 1rem;
       }
 
-      &:first-of-type {
-        left: 0;
-        top: 50%;
-        background-color: var(--purple-500);
+      button {
+        width: 3rem;
+        height: 3rem;
 
-        transform: translate(-50%, -50%);
-      }
+        border-radius: 0.75rem;
+        border: 0;
+        position: absolute;
+        z-index: 5;
 
-      &:last-of-type {
-        right: 0;
-        top: 50%;
-        background-color: var(--green-50);
-        transform: translate(50%, -50%);
-      }
-    }
-  }
+        font-size: 0;
 
-  header {
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--gray-100);
+        transition: 0.2s;
 
-    h1 {
-      margin-top: 2rem;
-      margin-bottom: 1.5rem;
-    }
+        &.hover {
+          filter: brightness(0.95);
+        }
 
-    span {
-      display: inline-block;
-      font-size: 0.875rem;
-
-      & + span {
-        margin-left: 1rem;
-        padding-left: 1rem;
-        position: relative;
-
-        &::before {
-          content: '';
-          position: absolute;
-          width: 4px;
-          height: 4px;
-          border-radius: 50%;
-          background-color: #ddd;
+        &:first-of-type {
           left: 0;
           top: 50%;
+          background-color: var(--purple-500);
+
           transform: translate(-50%, -50%);
+        }
+
+        &:last-of-type {
+          right: 0;
+          top: 50%;
+          background-color: var(--green-50);
+          transform: translate(50%, -50%);
         }
       }
     }
-  }
 
-  .description {
-    margin-top: 2rem;
-    line-height: 1.675rem;
-    color: var(--gray-800);
+    header {
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--gray-100);
 
-    p {
-      margin: 1.5rem 0;
+      h1 {
+        margin-top: 2rem;
+        margin-bottom: 1.5rem;
+      }
+
+      span {
+        display: inline-block;
+        font-size: 0.875rem;
+
+        & + span {
+          margin-left: 1rem;
+          padding-left: 1rem;
+          position: relative;
+
+          &::before {
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background-color: #ddd;
+            left: 0;
+            top: 50%;
+            transform: translate(-50%, -50%);
+          }
+        }
+      }
+    }
+
+    .description {
+      margin-top: 2rem;
+      line-height: 1.675rem;
+      color: var(--gray-800);
+
+      p {
+        margin: 1.5rem 0;
+      }
     }
   }
 }

@@ -3,6 +3,8 @@ import { ptBR } from 'date-fns/locale'
 import type { GetStaticProps, NextPage } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useContext } from 'react'
+import { PlayerContext } from '../contexts/PlayerContext'
 import { api } from '../services/api'
 import styles from '../styles/home.module.scss'
 import { convertDurationToTimeString } from '../utils/convertDurationToTimeString'
@@ -15,6 +17,7 @@ type Episode = {
   thumbnail: string
   url: string
   durationFormatted: string
+  duration: number
 }
 
 interface Props {
@@ -23,7 +26,7 @@ interface Props {
 }
 
 const Home: NextPage<Props> = ({ latestEpisodes, allEpisodes }) => {
-  console.log(latestEpisodes)
+  const { play } = useContext(PlayerContext)
 
   return (
     <div className={styles.container}>
@@ -50,7 +53,7 @@ const Home: NextPage<Props> = ({ latestEpisodes, allEpisodes }) => {
                 <span>{episode.durationFormatted}</span>
               </div>
 
-              <button type="button">
+              <button type="button" onClick={() => play(episode)}>
                 <img src="/assets/play-green.svg" alt="Tocar episodio" />
               </button>
             </li>

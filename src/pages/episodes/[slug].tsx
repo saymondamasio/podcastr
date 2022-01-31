@@ -25,44 +25,60 @@ interface Props {
 export default function Episode({ episode }: Props) {
   return (
     <div className={styles.container}>
-      <div className={styles.thumbnailContainer}>
-        <Link href="/" passHref>
+      <div>
+        <div className={styles.thumbnailContainer}>
+          <Link href="/" passHref>
+            <button type="button">
+              <img src="/assets/arrow-left.svg" alt="Voltar" />
+            </button>
+          </Link>
+
+          <Image
+            src={episode.thumbnail}
+            width={700}
+            height={160}
+            objectFit="cover"
+            alt={episode.title}
+          />
+
           <button type="button">
-            <img src="/assets/arrow-left.svg" alt="Voltar" />
+            <img src="/assets/play.svg" alt="Tocar episodio" />
           </button>
-        </Link>
+        </div>
 
-        <Image
-          src={episode.thumbnail}
-          width={700}
-          height={160}
-          objectFit="cover"
-          alt={episode.title}
+        <header>
+          <h1>{episode.title}</h1>
+          <span>{episode.members}</span>
+          <span>{episode.publishedAtFormatted}</span>
+          <span>{episode.durationFormatted}</span>
+        </header>
+
+        <div
+          className={styles.description}
+          dangerouslySetInnerHTML={{ __html: episode.description }}
         />
-
-        <button type="button">
-          <img src="/assets/play.svg" alt="Tocar episodio" />
-        </button>
       </div>
-
-      <header>
-        <h1>{episode.title}</h1>
-        <span>{episode.members}</span>
-        <span>{episode.publishedAtFormatted}</span>
-        <span>{episode.durationFormatted}</span>
-      </header>
-
-      <div
-        className={styles.description}
-        dangerouslySetInnerHTML={{ __html: episode.description }}
-      />
     </div>
   )
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
+  const episodes = await api.get('/episodes', {
+    params: {
+      _limit: 2,
+      _sort: 'published_at',
+      _order: 'desc',
+    },
+  })
+
+  const paths = episodes.data.map((episode: any) => ({
+    params: {
+      slug: episode.id,
+    },
+  }))
+
   return {
-    paths: [],
+    paths,
     fallback: 'blocking',
   }
 }
