@@ -6,7 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useContext } from 'react'
 import { PlayerContext } from '../contexts/PlayerContext'
-import { api } from '../services/api'
+import { connectDatabase } from '../services/mongo'
 import styles from '../styles/home.module.scss'
 import { convertDurationToTimeString } from '../utils/convertDurationToTimeString'
 
@@ -126,13 +126,18 @@ const Home: NextPage<Props> = ({ latestEpisodes, allEpisodes }) => {
 export default Home
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { data } = await api.get('/episodes', {
-    params: {
-      _limit: 12,
-      _sort: 'published_at',
-      _order: 'desc',
-    },
-  })
+  const db = await connectDatabase(process.env.MONGODB_URL!)
+  const episodesCollection = db.collection('episodes')
+
+  const data = JSON.parse(
+    JSON.stringify(
+      await episodesCollection
+        .find()
+        .sort({ published_at: -1 })
+        .limit(12)
+        .toArray()
+    )
+  )
 
   const episodes = data.map((episode: any) => ({
     ...episode,

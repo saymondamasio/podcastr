@@ -6,7 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useContext } from 'react'
 import { PlayerContext } from '../../contexts/PlayerContext'
-import { api } from '../../services/api'
+import { connectDatabase } from '../../services/mongo'
 import { convertDurationToTimeString } from '../../utils/convertDurationToTimeString'
 import styles from './episode.module.scss'
 
@@ -75,15 +75,16 @@ export default function Episode({ episode }: Props) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const episodes = await api.get('/episodes', {
-    params: {
-      _limit: 2,
-      _sort: 'published_at',
-      _order: 'desc',
-    },
-  })
+  const db = await connectDatabase(process.env.MONGODB_URL!)
+  const episodesCollection = db.collection('episodes')
 
-  const paths = episodes.data.map((episode: any) => ({
+  const episodes = await episodesCollection
+    .find()
+    .sort({ published_at: -1 })
+    .limit(2)
+    .toArray()
+
+  const paths = episodes.map((episode: any) => ({
     params: {
       slug: episode.id,
     },
@@ -96,7 +97,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const { data } = await api.get(`/episodes/${params?.slug}`)
+  const db = await connectDatabase(process.env.MONGODB_URL!)
+  const episodesCollection = db.collection('episodes')
+
+  const data = JSON.parse(
+    JSON.stringify(await episodesCollection.findOne({ id: params?.slug }))
+  )
 
   const episode = {
     ...data,
