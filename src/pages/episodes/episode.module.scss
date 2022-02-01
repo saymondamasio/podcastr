@@ -11,8 +11,10 @@
     .thumbnailContainer {
       position: relative;
 
-      img {
-        border-radius: 1rem;
+      .thumbnail {
+        img {
+          border-radius: 1rem;
+        }
       }
 
       button {
