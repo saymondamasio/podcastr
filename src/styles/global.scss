@@ -13,6 +13,20 @@
   --purple-400: #9164fa;
   --purple-500: #8257e5;
   --purple-800: #6f48c9;
+
+  --background: var(--gray-50);
+  --background-header: var(--white);
+  --text: var(--gray-500);
+  --title: var(--gray-800);
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  :root {
+    --background: #182830;
+    --background-header: #0d161a;
+    --text: #c1c1c1;
+    --title: #fdfdfd;
+  }
 }
 
 * {
@@ -34,7 +48,7 @@
 }
 
 body {
-  background-color: var(--gray-50);
+  background-color: var(--background);
 }
 
 body,
@@ -42,7 +56,7 @@ input,
 textarea,
 button {
   font: 500 1rem Inter, sans-serif;
-  color: var(--gray-500);
+  color: var(--text);
 }
 
 h1,
@@ -53,7 +67,7 @@ h5,
 h6 {
   font-weight: 600;
   font-family: Lexend, sans-serif;
-  color: var(--gray-800);
+  color: var(--title);
 }
 
 h1 {

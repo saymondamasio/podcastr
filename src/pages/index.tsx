@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useContext } from 'react'
 import { PlayerContext } from '../contexts/PlayerContext'
+import useMedia from '../hooks/useMedia'
 import { connectDatabase } from '../services/mongo'
 import styles from '../styles/home.module.scss'
 import { convertDurationToTimeString } from '../utils/convertDurationToTimeString'
@@ -28,6 +29,7 @@ interface Props {
 
 const Home: NextPage<Props> = ({ latestEpisodes, allEpisodes }) => {
   const { playList } = useContext(PlayerContext)
+  const isMedium = useMedia('(max-width: 1550px)')
 
   const episodesList = [...latestEpisodes, ...allEpisodes]
 
@@ -36,9 +38,9 @@ const Home: NextPage<Props> = ({ latestEpisodes, allEpisodes }) => {
       <Head>
         <title>Home | Podcastr</title>
       </Head>
-      <section className={styles.latestEpisodes}>
+      <section>
         <h2>Últimos lançamentos</h2>
-        <ul>
+        <ul className={styles.cardList}>
           {latestEpisodes.map((episode, index) => (
             <li key={episode.id}>
               <div className={styles.thumbnail}>
@@ -71,53 +73,93 @@ const Home: NextPage<Props> = ({ latestEpisodes, allEpisodes }) => {
       </section>
       <section className={styles.allEpisodes}>
         <h2>Todos lançamentos</h2>
-        <table cellSpacing={0}>
-          <thead>
-            <th></th>
-            <th>Podcast</th>
-            <th>Integrantes</th>
-            <th>Data</th>
-            <th>Duração</th>
-            <th></th>
-          </thead>
-          <tbody>
-            {allEpisodes.map((episode, index) => (
-              <tr key={episode.id}>
-                <td style={{ width: 80 }}>
+        {!isMedium ? (
+          <table cellSpacing={0}>
+            <thead>
+              <tr>
+                <th></th>
+                <th>Podcast</th>
+                <th>Integrantes</th>
+                <th>Data</th>
+                <th>Duração</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {allEpisodes.map((episode, index) => (
+                <tr key={episode.id}>
+                  <td style={{ width: 80 }}>
+                    <div className={styles.thumbnail}>
+                      <Image
+                        src={episode.thumbnail}
+                        width={120}
+                        height={120}
+                        alt={episode.title}
+                        objectFit="cover"
+                      />
+                    </div>
+                  </td>
+                  <td data-label="Podcast">
+                    <Link href={`/episodes/${episode.id}`}>
+                      <a>{episode.title}</a>
+                    </Link>
+                  </td>
+                  <td data-label="Integrantes">{episode.members}</td>
+                  <td
+                    data-label="Data"
+                    style={{ width: 100, textTransform: 'capitalize' }}
+                  >
+                    {episode.publishedAtFormatted}
+                  </td>
+                  <td data-label="Duração">{episode.durationFormatted}</td>
+                  <td>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        playList(episodesList, index + latestEpisodes.length)
+                      }
+                    >
+                      <img src="/assets/play-green.svg" alt="Tocar episodio" />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <div>
+            <ul className={styles.cardList}>
+              {allEpisodes.map((episode, index) => (
+                <li key={episode.id}>
                   <div className={styles.thumbnail}>
                     <Image
-                      src={episode.thumbnail}
-                      width={120}
-                      height={120}
-                      alt={episode.title}
+                      width={192}
+                      height={192}
                       objectFit="cover"
+                      src={episode.thumbnail}
+                      alt={episode.title}
                     />
                   </div>
-                </td>
-                <td>
-                  <Link href={`/episodes/${episode.id}`}>
-                    <a>{episode.title}</a>
-                  </Link>
-                </td>
-                <td>{episode.members}</td>
-                <td style={{ width: 100, textTransform: 'capitalize' }}>
-                  {episode.publishedAtFormatted}
-                </td>
-                <td>{episode.durationFormatted}</td>
-                <td>
+                  <div className={styles.episodeDetails}>
+                    <Link href={`/episodes/${episode.id}`}>
+                      <a>{episode.title}</a>
+                    </Link>
+                    <p>{episode.members}</p>
+                    <span>{episode.publishedAtFormatted}</span>
+                    <span>{episode.durationFormatted}</span>
+                  </div>
+
                   <button
                     type="button"
-                    onClick={() =>
-                      playList(episodesList, index + latestEpisodes.length)
-                    }
+                    onClick={() => playList(episodesList, index)}
                   >
                     <img src="/assets/play-green.svg" alt="Tocar episodio" />
                   </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </section>
     </div>
   )

@@ -1,0 +1,42 @@
+{
+  "name": "Podcastr",
+  "videos": [
+    "https://raw.githubusercontent.com/saymondamasio/podcastr/main/.github/demonstration.mp4"
+  ],
+  "images": [
+    "https://raw.githubusercontent.com/saymondamasio/podcastr/main/.github/screenshot-1.jpg",
+    "https://raw.githubusercontent.com/saymondamasio/podcastr/main/.github/screenshot-2.jpg",
+    "https://raw.githubusercontent.com/saymondamasio/podcastr/main/.github/screenshot-3.jpg",
+    "https://raw.githubusercontent.com/saymondamasio/podcastr/main/.github/screenshot-4.jpg",
+    "https://raw.githubusercontent.com/saymondamasio/podcastr/main/.github/screenshot-5.jpg"
+  ],
+  "description": "Essa aplicação permite que os usuários possam ouvir seus podcasts preferidos, assim ter controles como proximo, anterior, pausar, modo aleatório e modo loop.",
+  "short_description": "Uma aplicação web para ouvir podcasts sobre programação",
+  "link_preview": "https://podcastr-damasio.vercel.app",
+  "techs": [
+    {
+      "name": "Next.js",
+      "url": "https://nextjs.org/"
+    },
+    {
+      "name": "Typescript",
+      "url": "https://www.typescriptlang.org/"
+    },
+    {
+      "name": "Mongo",
+      "url": "https://www.mongodb.com/"
+    },
+    {
+      "name": "SASS",
+      "url": "https://sass-lang.com/"
+    },
+    {
+      "name": "Eslint",
+      "url": "https://eslint.org/"
+    },
+    {
+      "name": "Prettier",
+      "url": "https://prettier.io/"
+    }
+  ]
+}
