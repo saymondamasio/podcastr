@@ -68,7 +68,7 @@ export function Player() {
   const episode = episodeList[currentEpisodeIndex]
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${styles.active}`}>
       <header>
         <img src="/assets/playing.svg" alt="Tocando agora" />
         <strong>Tocando agora </strong>
@@ -76,13 +76,15 @@ export function Player() {
 
       {episode ? (
         <div className={styles.currentEpisode}>
-          <Image
-            width={592}
-            height={592}
-            src={episode.thumbnail}
-            objectFit="cover"
-            alt={episode.title}
-          />
+          <div className={styles.image}>
+            <Image
+              width={592}
+              height={592}
+              src={episode.thumbnail}
+              objectFit="cover"
+              alt={episode.title}
+            />
+          </div>
 
           <strong>{episode.title}</strong>
           <span>{episode.members}</span>

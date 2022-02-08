@@ -8,6 +8,10 @@
     margin-top: 3rem;
     margin-bottom: 1.5rem;
   }
+
+  @media (max-width: 480px) {
+    padding: 0 2rem;
+  }
 }
 
 .cardList {
@@ -15,6 +19,10 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
+
+  @media (max-width: 950px) {
+    grid-template-columns: 1fr;
+  }
 
   li {
     background-color: var(--background);
@@ -25,9 +33,11 @@
 
     display: flex;
     align-items: center;
+    min-width: 0;
 
     .thumbnail {
-      width: 6rem;
+      max-width: 6rem;
+      min-width: 6rem;
       img {
         border-radius: 1rem;
       }
@@ -36,6 +46,7 @@
     .episodeDetails {
       flex: 1;
       margin-left: 1rem;
+      min-width: 0;
 
       a {
         display: block;
@@ -132,8 +143,8 @@
       font-size: 0.875rem;
 
       .thumbnail {
-        width: 2.5rem;
-        height: 2.5rem;
+        max-width: 6rem;
+        min-width: 6rem;
         img {
           border-radius: 0.5rem;
         }
