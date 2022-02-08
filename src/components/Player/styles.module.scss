@@ -42,6 +42,7 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 100%;
+    gap: 1.5rem;
 
     header {
       display: none;
@@ -54,8 +55,21 @@
     }
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 950px) {
+    footer {
+      grid-column-start: 2;
+      grid-column: span 2;
+    }
+  }
+
+  @media (max-width: 550px) {
     padding: 2rem 2rem;
+
+    grid-template-columns: 1fr;
+
+    :is(.currentEpisode, .emptyPlayer) {
+      display: none;
+    }
   }
 }
 
